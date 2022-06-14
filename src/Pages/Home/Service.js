@@ -2,18 +2,18 @@ import React from "react";
 
 const Service = ({ service }) => {
   return (
-    <div class="card lg:mx-w-lg bg-base-100 shadow-xl">
-      <figure class="">
+    <div className="card lg:mx-w-lg bg-base-100 shadow-xl">
+      <figure className="">
         <img
           width={"116px"}
           height={"115px"}
           src={service.img}
           alt="Shoes"
-          class="rounded-xl"
+          className="rounded-xl"
         />
       </figure>
-      <div class="card-body items-center text-center">
-        <h2 class="card-title">{service.name}</h2>
+      <div className="card-body items-center text-center">
+        <h2 className="card-title">{service.name}</h2>
         <p>{service.description}</p>
       </div>
     </div>
