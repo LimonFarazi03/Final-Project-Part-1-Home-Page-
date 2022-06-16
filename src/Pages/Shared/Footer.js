@@ -50,7 +50,7 @@ const Footer = () => {
           </div>
         </div>
         <div className='my-10 text-center'>
-          <p>Copyright © {dynamicYear} - All right reserved by ACME Industries Ltd</p>
+          <p>Copyright © {dynamicYear} - All right reserved by Limon Farazi (abidislamabir@gmail.com)</p>
         </div>
       </div>
     </footer>
