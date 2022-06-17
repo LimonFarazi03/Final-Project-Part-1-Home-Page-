@@ -4,13 +4,8 @@ import PrimaryButton from "../Shared/PrimaryButton";
 import bgImage from "../../assets/images/bg.png";
 import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
-import { format } from 'date-fns';
 
 const AppointmentBanner = ({date,setDate}) => {
-  let footer = <p>Please pick a day.</p>;
-  if (date) {
-    footer = <p>You picked {format(date, 'PP')}.</p>;
-  }
   return (
     <div
       class="hero min-h-screen"
@@ -26,7 +21,6 @@ const AppointmentBanner = ({date,setDate}) => {
               mode="single"
               selected={date}
               onSelect={setDate}
-              footer={footer}
           />
         </div>
       </div>

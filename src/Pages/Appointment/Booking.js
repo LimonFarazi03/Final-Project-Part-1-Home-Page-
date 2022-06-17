@@ -13,7 +13,7 @@ const Booking = ({setTreatment,service}) => {
     <p className="mt-2">{slots.length} {slots.length > 1 ? 'Spaces' : 'Space'} Available</p></div>
     <div class="card-actions justify-center">
       {/* <button disabled={slots.length === 0} className="text-white font-bold btn btn-primary">Book Now</button> */}
-      <label onClick={()=>setTreatment(service)} disabled={slots.length === 0} for="booking-modal" class="text-white font-bold btn btn-primary">Book Appointment</label>
+      <label onClick={()=>setTreatment(service)} disabled={slots.length === 0} for="booking-modal" class="bg-gradient-to-r from-secondary to-primary text-white font-bold btn btn-primary">Book Appointment</label>
     </div>
   </div>
 </div>
