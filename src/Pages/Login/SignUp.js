@@ -1,43 +1,78 @@
-import React from "react";
-import { useSignInWithGoogle,useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
+import React from 'react';
+import { useSignInWithGoogle,useCreateUserWithEmailAndPassword, useUpdateProfile } from "react-firebase-hooks/auth";
 import auth from "../../firebase.init";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
 
-const Login = () => {
+const SignUp = () => {
   const navigate= useNavigate();
   const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
-  const [signInWithEmailAndPassword,user,loading,error,] = useSignInWithEmailAndPassword(auth);
+  const [updateProfile, updating, updateError] = useUpdateProfile(auth);
+  const [
+    createUserWithEmailAndPassword,
+    user,
+    loading,
+    error,
+  ] = useCreateUserWithEmailAndPassword(auth);
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm();
   // Loading
-  if(gLoading || loading){
+  if(gLoading || loading || updating){
     return <div className="flex h-screen justify-center items-center"> <progress class="progress w-56"></progress> </div>
   };
   // Error message
   let signInError;
-  if(error || gError){
-    signInError = <p className='text-red-500 text-center mt-4 text-sm'>⚠️ <small>{error?.message || gError?.message}</small></p>
+  if(error || gError || updateError){
+    signInError = <p className='text-red-500 text-center mt-4 text-sm'>⚠️ <small>{error?.message || gError?.message || updateError?.message}</small></p>
   }
 
-  const onSubmit = (data) => {
-    signInWithEmailAndPassword(data.email, data.password);
-    navigate('/appointment');
+  const onSubmit = async data => {
+    await createUserWithEmailAndPassword(data.email, data.password);
+    await updateProfile({ displayName: data.name });
+    toast.success('Account Created Successfully');
+    navigate("/appointment");
   };
+  if(gUser||user){
+    console.log(gUser||user);
+  }
 
   return (
     <div className="flex h-screen justify-center items-center">
       <div className="card w-96 bg-base-100 shadow-xl">
         <div className="card-body">
           <h2 className="text-center uppercase font-bold text-xl">
-            Login
+            Signup
           </h2>
           <form className="grid grid-cols-1" onSubmit={handleSubmit(onSubmit)}>
+            {/* name input */}
+            <div className="form-control w-full max-w-xs">
+              <label className="label">
+                <span className="label-text">Name</span>
+              </label>
+              <input
+                type="text"
+                placeholder="your name here"
+                className="input input-bordered w-full max-w-xs"
+                {...register("name", {
+                  required: {
+                    value: true,
+                    message: "⚠️ name is required",
+                  }
+                })}
+              />
+              <label className="label">
+                {errors.name?.type === "required" && (
+                  <span className="label-text-alt text-red-500">
+                    {errors.name.message}
+                  </span>
+                )}
+              </label>
+            </div>
             {/* email input */}
             <div className="form-control w-full max-w-xs">
               <label className="label">
@@ -116,11 +151,11 @@ const Login = () => {
             {/* Login Button */}
             <input
               type="submit"
-              value="login"
+              value="signup"
               className="mt-4 font-bold text-white	btn"
             />
             <div className="mt-2 font-bold">
-              <p><small>New in Doctors Portal?  <Link className="text-secondary" to="/signup">Create an account</Link></small></p>
+              <p><small>Already have an account  <Link className="text-secondary" to="/login">Login</Link></small></p>
             </div>
             {signInError}
           </form>
@@ -134,4 +169,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default SignUp;

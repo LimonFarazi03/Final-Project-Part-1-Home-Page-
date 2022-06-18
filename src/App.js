@@ -8,6 +8,9 @@ import Appointment from "./Pages/Appointment/Appointment";
 import Reviews from "./Pages/Reviews/Reviews";
 import ContactUs from "./Pages/ContactUs/ContactUs";
 import Login from "./Pages/Login/Login";
+import SignUp from "./Pages/Login/SignUp";
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer,toast } from 'react-toastify';
 
 function App() {
   return (
@@ -17,10 +20,12 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="about" element={<About />} />
         <Route path="appointment" element={<Appointment />} />
+        <Route path="signup" element={<SignUp />} />
         <Route path="reviews" element={<Reviews />} />
         <Route path="contact" element={<ContactUs />} />
         <Route path="login" element={<Login />} />
       </Routes>
+      <ToastContainer/>
       <Footer />
     </div>
   );
