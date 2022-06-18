@@ -1,30 +1,36 @@
 import React from "react";
-import { useSignInWithGoogle,useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
+import { useSignInWithGoogle,useSignInWithEmailAndPassword, useAuthState } from "react-firebase-hooks/auth";
 import auth from "../../firebase.init";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { toast } from 'react-toastify';
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useLocation } from "react-router-dom";
 
 const Login = () => {
-  const navigate= useNavigate();
+  let navigate = useNavigate();
+  let location = useLocation();
+  const [user, loading, error] = useAuthState(auth);
+  let from = location.state?.from?.pathname || "/";
+
   const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
-  const [signInWithEmailAndPassword,user,loading,error,] = useSignInWithEmailAndPassword(auth);
+  const [signInWithEmailAndPassword,signUser,signLoading,signError,] = useSignInWithEmailAndPassword(auth);
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm();
   // Loading
-  if(gLoading || loading){
+  if(gLoading || signLoading){
     return <div className="flex h-screen justify-center items-center"> <progress class="progress w-56"></progress> </div>
   };
   // Error message
   let signInError;
-  if(error || gError){
+  if(signError || gError){
     signInError = <p className='text-red-500 text-center mt-4 text-sm'>⚠️ <small>{error?.message || gError?.message}</small></p>
   }
-
+  if(user || gUser || signUser){
+    navigate(from, { replace: true });
+};
   const onSubmit = (data) => {
     signInWithEmailAndPassword(data.email, data.password);
     navigate('/appointment');
