@@ -21,7 +21,7 @@ const Login = () => {
   } = useForm();
   // Loading
   if(gLoading || signLoading){
-    return <div className="flex h-screen justify-center items-center"> <progress class="progress w-56"></progress> </div>
+    return <div className="flex h-screen justify-center items-center"> <progress className="progress w-56"></progress> </div>
   };
   // Error message
   let signInError;

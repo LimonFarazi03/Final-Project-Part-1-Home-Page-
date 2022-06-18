@@ -6,7 +6,7 @@ import PrimaryButton from "../Shared/PrimaryButton";
 const Banner = () => {
   return (
     <div
-      class="hero min-h-screen"
+      className="hero min-h-screen"
       style={{
         backgroundImage: `url(${bgImage})`,
         backgroundSize: 'cover'

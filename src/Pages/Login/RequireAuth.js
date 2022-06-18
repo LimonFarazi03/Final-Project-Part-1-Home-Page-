@@ -7,7 +7,7 @@ const RequireAuth = ({ children }) => {
   const [user, loading, error] = useAuthState(auth);
   let location = useLocation();
   if(loading){
-    return <div className="flex h-screen justify-center items-center"> <progress class="progress w-56"></progress> </div>
+    return <div className="flex h-screen justify-center items-center"> <progress className="progress w-56"></progress> </div>
   }
   if (!user) {
     return <Navigate to="/login" state={{ from: location }} replace />;
