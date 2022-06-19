@@ -1,5 +1,5 @@
 import React from "react";
-import { useSignInWithGoogle,useSignInWithEmailAndPassword, useAuthState } from "react-firebase-hooks/auth";
+import { useSignInWithGoogle,useSignInWithEmailAndPassword, useAuthState, useSendPasswordResetEmail } from "react-firebase-hooks/auth";
 import auth from "../../firebase.init";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
@@ -14,6 +14,7 @@ const Login = () => {
 
   const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
   const [signInWithEmailAndPassword,signUser,signLoading,signError,] = useSignInWithEmailAndPassword(auth);
+  const [sendPasswordResetEmail, sending, resetError] = useSendPasswordResetEmail(auth);
   const {
     register,
     formState: { errors },
@@ -50,6 +51,7 @@ const Login = () => {
                 <span className="label-text">Email</span>
               </label>
               <input
+              name="email"
                 type="email"
                 placeholder="your email here"
                 className="input input-bordered w-full max-w-xs"
@@ -77,6 +79,7 @@ const Login = () => {
                 )}
               </label>
             </div>
+            
             {/* Password input */}
             <div className="form-control w-full max-w-xs">
               <label className="label">
@@ -102,6 +105,9 @@ const Login = () => {
                 })}
               />
               <label className="label">
+              <span className="label-text-alt text-primary mt-1">
+                    Forgat password
+                  </span>
                 {errors.password?.type === "required" && (
                   <span className="label-text-alt text-red-500">
                     {errors.password.message}
