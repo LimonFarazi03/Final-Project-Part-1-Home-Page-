@@ -10,7 +10,8 @@ const AvailableAppointments = ({date}) => {
   // console.log(treatment);
 
   useEffect( ()=>{
-    fetch('http://localhost:5000/service')
+    const url = 'services.json'
+    fetch(url)
     .then(res => res.json())
     .then(data => setServices(data))
   },[]);
