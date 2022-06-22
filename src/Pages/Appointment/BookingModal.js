@@ -32,13 +32,17 @@ const BookingModal = ({date,treatment,setTreatment}) => {
     method: 'POST',
     body: JSON.stringify(booking),
     headers: {
-      'Content-type': 'application/json; charset=UTF-8',
+      'Content-type': 'application/json',
     },
     })
     .then((response) => response.json())
     .then(data => {
-      console.log(data);
-      toast.success(`Appointment is set, ${formattedDate} at ${slot}`);
+      // console.log(data)
+      if(data.success){
+        toast(`Appointment is set, ${formattedDate} at ${slot}`);
+      }else{
+        toast.error(`you already have an appointment on ${data.booking?.date} at ${data.booking?.slot}`);
+      };
       setTreatment(null);
     });
 
