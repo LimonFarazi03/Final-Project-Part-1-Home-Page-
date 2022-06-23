@@ -8,7 +8,7 @@ const AvailableAppointments = ({date}) => {
   const formattedDate = format(date, 'PP');
   const [services,setServices] = useState([]);
   const [treatment,setTreatment] = useState([]);
-  const [isReload, setIsreload] = useState(true)
+  const [isReload, setIsReload] = useState(true)
   // console.log(treatment);
 
   useEffect( ()=>{
@@ -24,7 +24,7 @@ const AvailableAppointments = ({date}) => {
     <div className='px-6 mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10'>
       {services.map(service => <Booking key={service._id} setTreatment={setTreatment} service={service}/>)}
     </div>
-          {treatment && <BookingModal isReload={isReload} setIsreload={setIsreload} date={date} treatment={treatment} setTreatment={setTreatment} />}
+          {treatment && <BookingModal isReload={isReload} setIsReload={setIsReload} date={date} treatment={treatment} setTreatment={setTreatment} />}
     </div>
   );
 };
