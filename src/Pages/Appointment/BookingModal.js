@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 
 {/* slots?.map(slot => <option>{slot}</option>) */}
 
-const BookingModal = ({date,treatment,setTreatment}) => {
+const BookingModal = ({date,treatment,setTreatment,isReload,setIsreload}) => {
   const {_id,name,slots} = treatment;
   const [user, loading, error] = useAuthState(auth);
   const formattedDate = format(date, 'PP');
@@ -39,11 +39,12 @@ const BookingModal = ({date,treatment,setTreatment}) => {
     .then(data => {
       // console.log(data)
       if(data.success){
-        toast(`Appointment is set, ${formattedDate} at ${slot}`);
+        toast.success(`Appointment is set, ${formattedDate} at ${slot}`);
       }else{
         toast.error(`you already have an appointment on ${data.booking?.date} at ${data.booking?.slot}`);
       };
       setTreatment(null);
+      setIsreload(!isReload)
     });
 
   }
