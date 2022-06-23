@@ -7,8 +7,8 @@ import { useForm } from "react-hook-form";
 
 {/* slots?.map(slot => <option>{slot}</option>) */}
 
-const BookingModal = ({date,treatment,setTreatment,isReload,setIsReload: setIsReload}) => {
-  const {_id,name,slots} = treatment;
+const BookingModal = ({date,treatment,setTreatment,refetch}) => {
+  const {_id,name,available} = treatment;
   const [user, loading, error] = useAuthState(auth);
   const formattedDate = format(date, 'PP');
   const { register, formState: { errors }, handleSubmit } = useForm();
@@ -43,8 +43,8 @@ const BookingModal = ({date,treatment,setTreatment,isReload,setIsReload: setIsRe
       }else{
         toast.error(`you already have an appointment on ${data.booking?.date} at ${data.booking?.slot}`);
       };
+      refetch();
       setTreatment(null);
-      setIsReload(!isReload)
     });
 
   }
@@ -59,7 +59,7 @@ const BookingModal = ({date,treatment,setTreatment,isReload,setIsReload: setIsRe
               <input name="time" type="text" disabled value={format(date, 'PP')} className="input input-bordered w-full max-w-xs" />
               <select name="slot" className="select select-bordered w-full max-w-xs">
                 {
-                  slots?.map(slot => <option value={slot}>{slot}</option>)
+                  available?.map(slot => <option value={slot}>{slot}</option>)
                 }
               </select>
               <input type="text" name="name" disabled value={user?.displayName} className="input input-bordered w-full max-w-xs" />
