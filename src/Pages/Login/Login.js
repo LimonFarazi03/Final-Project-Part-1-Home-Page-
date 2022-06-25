@@ -1,10 +1,16 @@
-import React from "react";
-import { useSignInWithGoogle,useSignInWithEmailAndPassword, useAuthState, useSendPasswordResetEmail } from "react-firebase-hooks/auth";
+import React, { useEffect } from "react";
+import {
+  useSignInWithGoogle,
+  useSignInWithEmailAndPassword,
+  useAuthState,
+  useSendPasswordResetEmail,
+} from "react-firebase-hooks/auth";
 import auth from "../../firebase.init";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import { toast } from 'react-toastify';
-import { useNavigate,useLocation } from "react-router-dom";
+import { toast } from "react-toastify";
+import { useNavigate, useLocation } from "react-router-dom";
+import UserToken from "../../hooks/UserToken";
 
 const Login = () => {
   let navigate = useNavigate();
@@ -13,37 +19,48 @@ const Login = () => {
   let from = location.state?.from?.pathname || "/";
 
   const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
-  const [signInWithEmailAndPassword,signUser,signLoading,signError,] = useSignInWithEmailAndPassword(auth);
-  const [sendPasswordResetEmail, sending, resetError] = useSendPasswordResetEmail(auth);
+  const [signInWithEmailAndPassword, signUser, signLoading, signError] =
+    useSignInWithEmailAndPassword(auth);
+  const [sendPasswordResetEmail, sending, resetError] =
+    useSendPasswordResetEmail(auth);
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm();
+  // token
+  const [token] = UserToken(user || gUser || signUser);
   // Loading
-  if(gLoading || signLoading){
-    return <div className="flex h-screen justify-center items-center"> <progress className="progress w-56"></progress> </div>
-  };
+  if (gLoading || signLoading) {
+    return (
+      <div className="flex h-screen justify-center items-center">
+        {" "}
+        <progress className="progress w-56"></progress>{" "}
+      </div>
+    );
+  }
   // Error message
   let signInError;
-  if(signError || gError){
-    signInError = <p className='text-red-500 text-center mt-4 text-sm'>⚠️ <small>{error?.message || gError?.message}</small></p>
+  if (signError || gError) {
+    signInError = (
+      <p className="text-red-500 text-center mt-4 text-sm">
+        ⚠️ <small>{error?.message || gError?.message}</small>
+      </p>
+    );
   }
-  if(user || gUser || signUser){
+  if (token) {
     navigate(from, { replace: true });
-};
+  }
   const onSubmit = (data) => {
     signInWithEmailAndPassword(data.email, data.password);
-    navigate('/appointment');
+    navigate("/appointment");
   };
 
   return (
     <div className="flex h-screen justify-center items-center">
       <div className="card w-96 bg-base-100 shadow-xl">
         <div className="card-body">
-          <h2 className="text-center uppercase font-bold text-xl">
-            Login
-          </h2>
+          <h2 className="text-center uppercase font-bold text-xl">Login</h2>
           <form className="grid grid-cols-1" onSubmit={handleSubmit(onSubmit)}>
             {/* email input */}
             <div className="form-control w-full max-w-xs">
@@ -51,7 +68,7 @@ const Login = () => {
                 <span className="label-text">Email</span>
               </label>
               <input
-              name="email"
+                name="email"
                 type="email"
                 placeholder="your email here"
                 className="input input-bordered w-full max-w-xs"
@@ -79,7 +96,7 @@ const Login = () => {
                 )}
               </label>
             </div>
-            
+
             {/* Password input */}
             <div className="form-control w-full max-w-xs">
               <label className="label">
@@ -105,9 +122,9 @@ const Login = () => {
                 })}
               />
               <label className="label">
-              <span className="label-text-alt text-primary mt-1">
-                    Forgat password
-                  </span>
+                <span className="label-text-alt text-primary mt-1">
+                  Forgat password
+                </span>
                 {errors.password?.type === "required" && (
                   <span className="label-text-alt text-red-500">
                     {errors.password.message}
@@ -132,12 +149,22 @@ const Login = () => {
               className="mt-4 font-bold text-white	btn"
             />
             <div className="mt-2 font-bold">
-              <p><small>New in Doctors Portal?  <Link className="text-secondary" to="/signup">Create an account</Link></small></p>
+              <p>
+                <small>
+                  New in Doctors Portal?{" "}
+                  <Link className="text-secondary" to="/signup">
+                    Create an account
+                  </Link>
+                </small>
+              </p>
             </div>
             {signInError}
           </form>
           <div className="divider">OR</div>
-          <button onClick={() => signInWithGoogle()} className="btn btn-outline">
+          <button
+            onClick={() => signInWithGoogle()}
+            className="btn btn-outline"
+          >
             Continue With Google
           </button>
         </div>

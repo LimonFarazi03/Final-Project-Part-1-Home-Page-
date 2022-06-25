@@ -7,16 +7,22 @@ const MyAppointment = () => {
   const [user, loading, error] = useAuthState(auth);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/booking?patientEmail=${user.email}`)
+    if(user){
+      fetch(`http://localhost:5000/booking?patientEmail=${user.email}`, {
+        method: 'GET',
+        headers: {
+          'authorization':`Bearer ${localStorage.getItem('accessToken')}`
+        }
+      })
       .then((res) => res.json())
       .then((data) => setAppointments(data));
+    }
   }, [user]);
 
   if (loading) {
     return (
       <div className="flex h-screen justify-center items-center">
-        {" "}
-        <progress className="progress w-56"></progress>{" "}
+        <progress className="progress w-56"></progress>
       </div>
     );
   }
@@ -39,9 +45,9 @@ const MyAppointment = () => {
           </thead>
           <tbody>
           {
-            appointments.map(appointment =>
-             <tr>
-              <td>1</td>
+            appointments.map((appointment,index) =>
+             <tr class="hover">
+              <td>{index+1}</td>
               <td>{appointment.patientName}</td>
               <td>{appointment.treatmentName}</td>
               <td>{appointment.date}</td>

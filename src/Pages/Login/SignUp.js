@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
+import UserToken from '../../hooks/UserToken';
 
 const SignUp = () => {
   const navigate= useNavigate();
@@ -21,6 +22,7 @@ const SignUp = () => {
     formState: { errors },
     handleSubmit,
   } = useForm();
+  const [token] = UserToken(gUser||user)
   // Loading
   if(gLoading || loading || updating){
     return <div className="flex h-screen justify-center items-center"> <progress className="progress w-56"></progress> </div>
@@ -37,8 +39,9 @@ const SignUp = () => {
     toast.success('Account Created Successfully');
     navigate("/appointment");
   };
-  if(gUser||user){
-    console.log(gUser||user);
+  if(token){
+    // console.log(gUser||user);
+    navigate('/appointment')
   }
 
   return (
