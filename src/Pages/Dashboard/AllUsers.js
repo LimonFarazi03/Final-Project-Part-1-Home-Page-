@@ -8,7 +8,7 @@ const AllUsers = () => {
     error,
     data: users,
   } = useQuery("repoData", () =>
-    fetch("http://localhost:5000/allusers").then((res) => res.json())
+    fetch("https://protected-ocean-34758.herokuapp.com/allusers").then((res) => res.json())
   );
   if (isLoading) {
     return (

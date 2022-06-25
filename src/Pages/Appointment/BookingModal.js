@@ -27,7 +27,7 @@ const BookingModal = ({date,treatment,setTreatment,refetch}) => {
       patientPhNumber:phone,
       patientEmail:user?.email,
     };
-    const url = 'http://localhost:5000/booking';
+    const url = 'https://protected-ocean-34758.herokuapp.com/booking';
     fetch(url, {
     method: 'POST',
     body: JSON.stringify(booking),

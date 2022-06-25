@@ -12,7 +12,7 @@ const AvailableAppointments = ({date}) => {
   // console.log(treatment);
 
   const {isLoading, error, data:services,refetch} = useQuery(['available',formattedDate], ()=>
-  fetch(`http://localhost:5000/available?date=${formattedDate}`)
+  fetch(`https://protected-ocean-34758.herokuapp.com/available?date=${formattedDate}`)
     .then(res => res.json())
   );
   if(isLoading){

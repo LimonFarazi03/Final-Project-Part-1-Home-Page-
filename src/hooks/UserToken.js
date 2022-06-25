@@ -7,7 +7,7 @@ const UserToken = (user) => {
     // console.log(email)
     const currentUSer = { email: email };
     if (email) {
-      fetch(`http://localhost:5000/user/${email}`, {
+      fetch(`https://protected-ocean-34758.herokuapp.com/user/${email}`, {
         method: "PUT",
         body: JSON.stringify(currentUSer),
         headers: {
