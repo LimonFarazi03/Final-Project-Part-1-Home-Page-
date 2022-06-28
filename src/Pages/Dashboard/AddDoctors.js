@@ -2,10 +2,11 @@ import React from 'react';
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { useQuery } from 'react-query'
+import { toast } from 'react-toastify';
 
 const AddDoctors = () => {
 
-  const {register,formState: { errors },handleSubmit,} = useForm();
+  const {register,formState: { errors },handleSubmit, reset} = useForm();
   const { isLoading, error, data:services } = useQuery('services', () =>
      fetch('http://localhost:5000/service').then(res =>
        res.json()
@@ -34,7 +35,25 @@ const AddDoctors = () => {
             };
             // send to data base
             console.log(doctorInfo);
-          }
+            const url = 'http://localhost:5000/doctor'
+            fetch(url, {
+              method: 'POST',
+              body: JSON.stringify(doctorInfo),
+              headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+              },
+            })
+              .then((response) => response.json())
+              .then((inserted) => {
+                if(inserted.insertedId){
+                  toast.success('Doctor Added');
+                  reset()
+                }else{
+                  toast.error('Something Went Wrong')
+                }
+                
+              });
+          };
           console.log('Iam File', result)
         });
   };
@@ -128,7 +147,7 @@ const AddDoctors = () => {
               </label>
               <input
                 type="file"
-                className="input input-bordered w-full max-w-xs"
+                className="input w-full max-w-xs"
                 {...register("photo", {
                   required: {
                     value: true,
