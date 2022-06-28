@@ -20,7 +20,7 @@ const AllUsers = () => {
   }
   return (
     <div>
-      <h1 class="text-3xl font-bold text-primary text-center mb-4">
+      <h1 class="text-3xl font-bold text-center mb-4">
         All users: {users.length}
       </h1>
       <div class="overflow-x-auto">

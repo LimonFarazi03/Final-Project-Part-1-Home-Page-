@@ -28,8 +28,8 @@ const MyAppointment = () => {
   }
   return (
     <div>
-      <h1 className="text-3xl text-primary font-bold mb-4 text-center">
-        This is My appointment: {appointments.length}
+      <h1 className="text-center text-3xl font-bold mb-4">
+        My Appointments: {appointments.length}
       </h1>
 
       <div class="overflow-x-auto">
