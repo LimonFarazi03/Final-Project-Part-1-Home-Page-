@@ -10,7 +10,7 @@ import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useNavigate, useLocation } from "react-router-dom";
-import UserToken from "../../hooks/UserToken";
+import loadingSpinner from '../../assets/images/loadingSpinner2.gif';
 
 const Login = () => {
   let navigate = useNavigate();
@@ -28,14 +28,11 @@ const Login = () => {
     formState: { errors },
     handleSubmit,
   } = useForm();
-  // token
-  const [token] = UserToken(user || gUser || signUser);
   // Loading
   if (gLoading || signLoading) {
     return (
       <div className="flex h-screen justify-center items-center">
-        {" "}
-        <progress className="progress w-56"></progress>{" "}
+        <img src={loadingSpinner} alt="loading spinner" />
       </div>
     );
   }
@@ -48,7 +45,7 @@ const Login = () => {
       </p>
     );
   }
-  if (token) {
+  if (signUser || gUser) {
     navigate(from, { replace: true });
   }
   const onSubmit = (data) => {

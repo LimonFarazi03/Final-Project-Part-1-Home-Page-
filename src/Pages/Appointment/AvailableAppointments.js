@@ -2,11 +2,12 @@ import React,{useState,useEffect} from 'react';
 import { format } from 'date-fns';
 import Booking from './Booking';
 import BookingModal from './BookingModal';
-import { useQuery } from 'react-query'
+import { useQuery } from 'react-query';
+import loadingSpinner from '../../assets/images/loadingSpinner2.gif';
 
 const AvailableAppointments = ({date}) => {
   const formattedDate = format(date, 'PP');
-  const [treatment,setTreatment] = useState([]);
+  const [treatment,setTreatment] = useState(null);
 
   // const [services,setServices] = useState([]);
   // console.log(treatment);
@@ -16,13 +17,10 @@ const AvailableAppointments = ({date}) => {
     .then(res => res.json())
   );
   if(isLoading){
-    return <div className="flex h-screen justify-center items-center"> <progress className="progress w-56"></progress> </div>
-  }
-  // useEffect( ()=>{
-  //   fetch(`http://localhost:5000/available?date=${formattedDate}`)
-  //   .then(res => res.json())
-  //   .then(data => setServices(data))
-  // },[isReload]);
+    return  <div className="flex h-screen justify-center items-center">
+                <img src={loadingSpinner} alt="loading spinner" />
+            </div>
+   };
 
   return (
     <div className="my-28">

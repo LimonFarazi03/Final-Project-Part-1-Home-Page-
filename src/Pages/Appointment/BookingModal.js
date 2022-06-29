@@ -27,17 +27,16 @@ const BookingModal = ({date,treatment,setTreatment,refetch}) => {
       patientPhNumber:phone,
       patientEmail:user?.email
     };
-    const url = 'https://protected-ocean-34758.herokuapp.com/booking';
-    fetch(url, {
-    method: 'POST',
-    body: JSON.stringify(booking),
-    headers: {
-      'Content-type': 'application/json',
-    },
-    })
+    fetch('https://protected-ocean-34758.herokuapp.com/booking', {
+          method: 'POST',
+          body: JSON.stringify(booking),
+          headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+          },
+        })
     .then((response) => response.json())
     .then(data => {
-      // console.log(data)
+      console.log(data)
       if(data.success){
         toast.success(`Appointment is set, ${formattedDate} at ${slot}`);
       }else{

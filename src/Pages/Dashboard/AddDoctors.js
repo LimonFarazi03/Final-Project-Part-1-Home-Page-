@@ -3,12 +3,13 @@ import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { useQuery } from 'react-query'
 import { toast } from 'react-toastify';
+import loadingSpinner from '../../assets/images/loadingSpinner2.gif';
 
 const AddDoctors = () => {
 
   const {register,formState: { errors },handleSubmit, reset} = useForm();
   const { isLoading, error, data:services } = useQuery('services', () =>
-     fetch('http://localhost:5000/service').then(res =>
+     fetch('https://protected-ocean-34758.herokuapp.com/service').then(res =>
        res.json()
      )
   );
@@ -35,7 +36,7 @@ const AddDoctors = () => {
             };
             // send to data base
             console.log(doctorInfo);
-            const url = 'http://localhost:5000/doctor'
+            const url = 'https://protected-ocean-34758.herokuapp.com/doctor'
             fetch(url, {
               method: 'POST',
               body: JSON.stringify(doctorInfo),
@@ -58,9 +59,9 @@ const AddDoctors = () => {
         });
   };
 
-   if(isLoading){
+  if(isLoading){
     return  <div className="flex h-screen justify-center items-center">
-                <progress className="progress w-56"></progress>
+                <img src={loadingSpinner} alt="loading spinner" />
             </div>
    };
 

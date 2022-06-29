@@ -1,6 +1,6 @@
 import React from "react";
 import { useQuery } from "react-query";
-import loadingSpinner from "../../assets/images/loadingSpinner.gif";
+import loadingSpinner from "../../assets/images/loadingSpinner2.gif";
 
 const AllUsers = () => {
   const {
@@ -10,14 +10,11 @@ const AllUsers = () => {
   } = useQuery("repoData", () =>
     fetch("https://protected-ocean-34758.herokuapp.com/allusers").then((res) => res.json())
   );
-  if (isLoading) {
-    return (
-      <div className="flex h-screen justify-center items-center">
-        {" "}
-        <img width={"110px"} src={loadingSpinner} alt="loading" />{" "}
-      </div>
-    );
-  }
+  if(isLoading){
+    return  <div className="flex h-screen justify-center items-center">
+                <img src={loadingSpinner} alt="loading spinner" />
+            </div>
+   };
   return (
     <div>
       <h1 class="text-3xl font-bold text-center mb-4">

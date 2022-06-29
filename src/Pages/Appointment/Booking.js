@@ -2,7 +2,7 @@ import React from "react";
 import PrimaryButton from "../Shared/PrimaryButton";
 
 const Booking = ({ setTreatment, service }) => {
-  const { name, available } = service;
+  const { name, available,price } = service;
   return (
     <div className="text-center">
       <div className="card lg:max-w-lg bg-base-100 shadow-xl">
@@ -20,6 +20,9 @@ const Booking = ({ setTreatment, service }) => {
             </p>
             <p className="mt-2">
               {available.length} {available.length > 1 ? "Spaces" : "Space"} Available
+            </p>
+            <p className="mt-2 font-bold">
+              Price: ${price}
             </p>
           </div>
           <div className="card-actions justify-center">

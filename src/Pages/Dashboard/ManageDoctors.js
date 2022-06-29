@@ -1,14 +1,14 @@
 import React from 'react';
 import { useQuery } from 'react-query'
 import { toast } from 'react-toastify';
-import loadingSpinner from "../../assets/images/loadingSpinner.gif";
+import loadingSpinner from "../../assets/images/loadingSpinner2.gif";
 import person from "../../assets/images/people1.png";
 
 
 const ManageDoctors = () => {
 
   const { isLoading, error, data:doctors,refetch } = useQuery('doctors', () =>
-     fetch('http://localhost:5000/doctor').then(res =>
+     fetch('https://protected-ocean-34758.herokuapp.com/doctor').then(res =>
        res.json()
      )
    );
@@ -16,7 +16,7 @@ const ManageDoctors = () => {
     //  console.log(email)
       const accept = window.confirm('Are you want to delete');
       if(accept){
-        fetch(`http://localhost:5000/doctor/${email}`,{
+        fetch(`https://protected-ocean-34758.herokuapp.com/doctor/${email}`,{
         method: 'DELETE'
       })
       .then(response => response.json())
@@ -33,7 +33,7 @@ const ManageDoctors = () => {
    if (isLoading) {
     return (
       <div className="flex h-screen justify-center items-center">
-        <img width={"110px"} src={loadingSpinner} alt="loading" />
+        <img src={loadingSpinner} alt="loading" />
       </div>
     );
   }

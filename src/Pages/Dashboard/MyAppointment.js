@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import auth from "../../firebase.init";
+import loadingSpinner from '../../assets/images/loadingSpinner2.gif';
 
 const MyAppointment = () => {
   const [appointments, setAppointments] = useState([]);
@@ -10,9 +11,6 @@ const MyAppointment = () => {
     if(user){
       fetch(`https://protected-ocean-34758.herokuapp.com/booking?patientEmail=${user.email}`, {
         method: 'GET',
-        headers: {
-          'authorization':`Bearer ${localStorage.getItem('accessToken')}`
-        }
       })
       .then((res) => res.json())
       .then((data) => setAppointments(data));
@@ -22,7 +20,7 @@ const MyAppointment = () => {
   if (loading) {
     return (
       <div className="flex h-screen justify-center items-center">
-        <progress className="progress w-56"></progress>
+        <img src={loadingSpinner} alt="loading spinner" />
       </div>
     );
   }
